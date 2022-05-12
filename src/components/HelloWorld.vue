@@ -3,7 +3,8 @@
     <h1 v-show="isConnected">{{ account }}</h1>
     <button v-show="!isConnected" @click="connect">Connect Ale</button>
     <div style="color: #f00" v-show="isConnected">Connect Success!</div>
-    <div id="firstTable">
+    <div class="container text-center  mt-5 mb-5">
+    <table class="table" id="firstTable" align-center>
       <thead>
         <tr>
           <th>ID</th>
@@ -20,9 +21,10 @@
           <td>{{row.died}}</td>
         </tr>
       </tbody>
+    </table>
     </div>
     <p></p>
-    <button v-show="isConnected" @click="approveMoney">approve $100</button>
+    <button v-show="isConnected" @click="approveMoney">refresh</button>
   </div>
 </template>
 
@@ -54,6 +56,7 @@ export default {
     },
     approveMoney() {
       let self = this;
+      self.rows = [];
       services.getCount().then(function(moralsCount) {
 
       moralsCount = +moralsCount.toString(10);
