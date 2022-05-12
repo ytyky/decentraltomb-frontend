@@ -5,8 +5,11 @@ import store from '../store'
 import Big from 'bignumber.js'
 
 export default {
-    async getName() {
-        return await contract.Instance.methods.name().call();
+    async getCount() {
+        return await contract.Instance.methods.moralsCount().call();
+    },
+    async getdata(i) {
+        return await contract.Instance.methods.morals(i).call();
     },
     async getSymbol() {
         return await contract.Instance.methods.symbol().call();

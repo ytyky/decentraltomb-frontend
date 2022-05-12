@@ -3,6 +3,25 @@
     <h1 v-show="isConnected">{{ account }}</h1>
     <button v-show="!isConnected" @click="connect">Connect Ale</button>
     <div style="color: #f00" v-show="isConnected">Connect Success!</div>
+    <div id="firstTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>RIP</th>
+          <th>Died</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row in rows" :key=row.id>
+          <td>{{row.id}}</td>
+          <td>{{row.name}}</td>
+          <td>{{row.RIPCount}}</td>
+          <td>{{row.died}}</td>
+        </tr>
+      </tbody>
+    </div>
+    <p></p>
     <button v-show="isConnected" @click="approveMoney">approve $100</button>
   </div>
 </template>
@@ -16,6 +35,7 @@ export default {
     return {
       account: "",
       isConnected: false,
+      rows: [{id: "123", name: "ty", RIPCount: "2", died: "na"}],
     };
   },
   watch: {
@@ -33,8 +53,22 @@ export default {
       window["aleereum"] && window["aleereum"].connect();
     },
     approveMoney() {
-      services.getName().then(res => {
-        console.log(res);
+      let self = this;
+      services.getCount().then(function(moralsCount) {
+
+      moralsCount = +moralsCount.toString(10);
+      console.log(moralsCount);
+      
+      
+        for (var i = 1; i <= moralsCount; i++) {
+          (services.getdata(i).then((moral) => {
+            moral[0] = moral[0].toString(10);
+            moral[2].toString(10);
+            //console.log(moral);
+            self.rows.push(moral);
+          }));
+        }
+
       });
       services.approve(100).then((res) => {
         console.log(res);
