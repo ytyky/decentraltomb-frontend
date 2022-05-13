@@ -14,9 +14,9 @@ export default {
     async getSymbol() {
         return await contract.Instance.methods.symbol().call();
     },
-    async approve(limit) {
-        const approveAmount = new Big(limit).times('1e18').toString();
-        const response = await contract.Instance.methods.approve(contract.coreAddress, approveAmount).sendToBlock({
+    async approve(name, passday) {
+        //const approveAmount = new Big(limit).times('1e18').toString();
+        const response = await contract.Instance.methods.addmorals(name, passday).sendToBlock({
             from: store.state.dapp.account,
             amount: new Big('0').toString()
         });

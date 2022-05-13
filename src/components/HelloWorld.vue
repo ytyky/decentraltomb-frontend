@@ -25,6 +25,17 @@
     </div>
     <p></p>
     <button v-show="isConnected" @click="approveMoney">refresh</button>
+    <p></p>
+    
+    <h3>add a tomb</h3>
+    <label for="name">Name:</label>
+    <input ref="inputname" id="name" v-model="name">
+    
+    <label for="passday">Pass day:</label>      
+    <input ref="inputday" id="passaday" v-model="passday">
+    <p></p>
+    <button v-show="isConnected" @click="addMoral">add</button> 
+    
   </div>
 </template>
 
@@ -38,6 +49,8 @@ export default {
       account: "",
       isConnected: false,
       rows: [{id: "123", name: "ty", RIPCount: "2", died: "na"}],
+      name: "",
+      passday: "",
     };
   },
   watch: {
@@ -54,6 +67,13 @@ export default {
     connect() {
       window["aleereum"] && window["aleereum"].connect();
     },
+    addMoral() {
+        services.approve(this.name, this.passday).then((res) => {
+        console.log(res);
+      });
+        this.name = [];
+        this.passday = [];
+      },
     approveMoney() {
       let self = this;
       self.rows = [];
@@ -77,6 +97,7 @@ export default {
         console.log(res);
       });
     },
+    
   },
 };
 </script>
