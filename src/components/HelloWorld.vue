@@ -11,6 +11,7 @@
           <th>Name</th>
           <th>RIP</th>
           <th>Died</th>
+          <th>F</th>
         </tr>
       </thead>
       <tbody>
@@ -19,12 +20,13 @@
           <td>{{row.name}}</td>
           <td>{{row.RIPCount}}</td>
           <td>{{row.died}}</td>
+          <td><button @click="respect(row)">pay respect</button></td>
         </tr>
       </tbody>
     </table>
     </div>
     <p></p>
-    <button v-show="isConnected" @click="approveMoney">refresh</button>
+    <button v-show="isConnected" @click="approveMoney">load tombs</button>
     <p></p>
     
     <h3>add a tomb</h3>
@@ -48,7 +50,7 @@ export default {
     return {
       account: "",
       isConnected: false,
-      rows: [{id: "123", name: "ty", RIPCount: "2", died: "na"}],
+      rows: [],
       name: "",
       passday: "",
     };
@@ -58,6 +60,7 @@ export default {
       handler(val) {
         this.account = val.account;
         this.isConnected = val.isConnected;
+        //this.rows = val.rows;
       },
       immediate: true,
       deep: true,
@@ -74,6 +77,13 @@ export default {
         this.name = [];
         this.passday = [];
       },
+    respect(row) {
+      let id = +row.id.toString(10);
+      //console.log(id);
+      services.pressF(id).then((res) => {
+        console.log(res);
+      });
+    },
     approveMoney() {
       let self = this;
       self.rows = [];
@@ -92,9 +102,6 @@ export default {
           }));
         }
 
-      });
-      services.approve(100).then((res) => {
-        console.log(res);
       });
     },
     

@@ -11,8 +11,19 @@ export default {
     async getdata(i) {
         return await contract.Instance.methods.morals(i).call();
     },
-    async getSymbol() {
-        return await contract.Instance.methods.symbol().call();
+    async pressF(count) {
+        const response = await contract.Instance.methods.payRespect(count).sendToBlock({
+            from: store.state.dapp.account,
+            amount: new Big('0').toString()
+        });
+
+        if (response.success) {
+            console.log('transaction success: ', response);
+        } else {
+            console.log('transaction failed: ', response);
+        }
+
+        return response;
     },
     async approve(name, passday) {
         //const approveAmount = new Big(limit).times('1e18').toString();
